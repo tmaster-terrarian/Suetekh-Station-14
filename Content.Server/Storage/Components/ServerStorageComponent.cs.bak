@@ -62,8 +62,8 @@ namespace Content.Server.Storage.Components
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
 		
-		[DataField("maxItemSizeBypassList")]
-		private EntityWhitelist? _maxItemSizeBypassList = null;
+		[DataField("")]
+		private EntityWhitelist? _
 
         private bool _storageInitialCalculated;
         private int _storageUsed;
