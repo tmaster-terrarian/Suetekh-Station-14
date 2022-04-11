@@ -61,9 +61,6 @@ namespace Content.Server.Storage.Components
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
-		
-		[DataField("maxItemSizeBypassList")]
-		private EntityWhitelist? _maxItemSizeBypassList = null;
 
         private bool _storageInitialCalculated;
         private int _storageUsed;
@@ -72,6 +69,7 @@ namespace Content.Server.Storage.Components
 
         [DataField("maxItemSize")]
         private int? _storageMaxItemSize;
+
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
@@ -139,25 +137,42 @@ namespace Content.Server.Storage.Components
             {
                 return false;
             }
-			
-			
-			// fits = whitelist && (max_item_size || bypass_list)
-			
-			// fits = whitelist && max_item_size ||  whitelist && bypass_list
-			
-			// does not fit = not whitelist || (not max size && not on list)
-			
-            // Item is not in whitelist
-            if (_whitelist != null && !_whitelist.IsValid(entity))
+
+
+            // There is a Max Item Size
+            if (_storageMaxItemSize != null)
             {
-                return false;
+                // Item does not fit
+                if (store?.Size > _storageMaxItemSize)
+                {
+                    // If there's a whitelist
+                    if (_whitelist != null)
+                    {
+                        // Item is not on the whitelist
+                        if (!_whitelist.IsValid(entity))
+                        {
+                            return false;
+                        }
+                    } else
+                    // There is no whitelist
+                    {
+                        return false;
+                    }
+                }
+            } else
+            // There is no max item size
+            {
+                // If there's a whitelist
+                if (_whitelist != null)
+                {
+                    // Item is not on the whitelist
+                    if (!_whitelist.IsValid(entity))
+                    {
+                        return false;
+                    }
+                }
             }
 
-            // Item is above max item size
-            if (_storageMaxItemSize != null && store?.Size > _storageMaxItemSize)
-            {
-                return false
-            }
 
             if (entity.Transform.Anchored)
             {

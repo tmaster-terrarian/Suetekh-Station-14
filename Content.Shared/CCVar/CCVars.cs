@@ -17,6 +17,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AmbienceBasicEnabled =
             CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        public static readonly CVarDef<bool> DynamicMusicEnabled =
+            CVarDef.Create("dynamic.music.enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
         /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience.
         /// </summary>

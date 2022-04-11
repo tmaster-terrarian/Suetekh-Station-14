@@ -23,6 +23,7 @@
                 </BoxContainer>
                 <Control MinSize="0 8" />
                 <CheckBox Name="AmbienceCheckBox" Text="{Loc 'ui-options-ambient-hum'}" />
+                <CheckBox Name="MusicCheckBox" Text="{Loc 'ui-options-music'}" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
             </BoxContainer>
         </BoxContainer>

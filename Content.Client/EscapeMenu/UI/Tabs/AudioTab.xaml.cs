@@ -24,12 +24,14 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
             AmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
             LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
+            MusicCheckBox.Pressed = _cfg.GetCVar(CCVars.DynamicMusicEnabled);
 
             ApplyButton.OnPressed += OnApplyButtonPressed;
             ResetButton.OnPressed += OnResetButtonPressed;
             MasterVolumeSlider.OnValueChanged += OnMasterVolumeSliderChanged;
             AmbienceCheckBox.OnToggled += OnAmbienceCheckToggled;
             LobbyMusicCheckBox.OnToggled += OnLobbyMusicCheckToggled;
+            MusicCheckBox.OnToggled += OnMusicCheckToggled;
 
             Reset();
         }
@@ -61,11 +63,17 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             UpdateChanges();
         }
 
+        private void OnMusicCheckToggled(BaseButton.ButtonEventArgs args)
+        {
+            UpdateChanges();
+        }
+
         private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
         {
             _cfg.SetCVar(CVars.AudioMasterVolume, MasterVolumeSlider.Value / 100);
             _cfg.SetCVar(CCVars.AmbienceBasicEnabled, AmbienceCheckBox.Pressed);
             _cfg.SetCVar(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.DynamicMusicEnabled, MusicCheckBox.Pressed);
             _cfg.SaveToFile();
             UpdateChanges();
         }
@@ -82,6 +90,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 Loc.GetString("ui-options-volume-percent", ("volume", MasterVolumeSlider.Value / 100));
             AmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
             LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
+            MusicCheckBox.Pressed = _cfg.GetCVar(CCVars.DynamicMusicEnabled);
             UpdateChanges();
         }
 
@@ -91,7 +100,8 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 System.Math.Abs(MasterVolumeSlider.Value - _cfg.GetCVar(CVars.AudioMasterVolume) * 100) < 0.01f;
             var isAmbienceSame = AmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
             var isLobbySame = LobbyMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.LobbyMusicEnabled);
-            var isEverythingSame = isMasterVolumeSame && isAmbienceSame && isLobbySame;
+            var isMusicSame = MusicCheckBox.Pressed == _cfg.GetCVar(CCVars.DynamicMusicEnabled);
+            var isEverythingSame = isMasterVolumeSame && isAmbienceSame && isLobbySame && isMusicSame;
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
         }

@@ -3,6 +3,7 @@
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
             <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
+            <CheckBox Name="ShadowsCheckBox" Text="{Loc 'ui-options-shadows'}" />
             <CheckBox Name="FullscreenCheckBox" Text="{Loc 'ui-options-fullscreen'}" />
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'ui-options-lighting-label'}" />
